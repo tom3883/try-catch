@@ -21,15 +21,18 @@ library(dplyr)
 # data preprocessing
 
 # remove incoherent country values
-## val <- "[Worldwide]"
-## dataset <- dataset[dataset$'location.country' != val, ]
-## 
-## dataset$'location.country'[dataset$'location.country'== "Costa Mesa" ] <- "United States"
-## dataset$'location.country'[dataset$'location.country'== "Quebec" ] <- "Canada"
-## dataset$'location.country'[dataset$'location.country'== "São Paulo" ] <- "Brazil"
+val <- "[Worldwide]"
+dataset <- read.csv("src/dataset.csv", sep = ";")
+dataset <- dataset[dataset$'location.country' != val, ]
+
+dataset$'location.country'[dataset$'location.country'== "Costa Mesa" ] <- "United States"
+dataset$'location.country'[dataset$'location.country'== "Quebec" ] <- "Canada"
+dataset$'location.country'[dataset$'location.country'== "São Paulo" ] <- "Brazil"
 
 print("Countries : \n")
 unique_values <- unique(dataset[['location.country']])
 print(unique_values)
-      
-      
+
+# rank the songs by rank column in decrease order keeping only the columns title, name, rank, and country. Removes duplicates
+datasetRank <- dataset %>% arrange(desc(rank)) %>% select(title, name, rank, 'location.country') %>% distinct()
+View(datasetRank)
