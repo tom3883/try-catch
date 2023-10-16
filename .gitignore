@@ -54,3 +54,5 @@ rsconnect/
 # Data
 wasabi_artists.csv
 wasabi_songs.csv
+
+/node_modules

@@ -1,0 +1,22 @@
+{
+  "name": "try-catch",
+  "version": "1.0.0",
+  "description": "Data visualization project on the WASABI dataset",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tom3883/try-catch.git"
+  },
+  "author": "try-catch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tom3883/try-catch/issues"
+  },
+  "homepage": "https://github.com/tom3883/try-catch#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
