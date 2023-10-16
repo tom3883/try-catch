@@ -15,54 +15,36 @@
 <body>
 	<div id="chart"></div>
 	<script>
-		var data = [
-		{
-		name: "USA",
-		values: [
-			{date: "2000", price: "100"},
-			{date: "2001", price: "110"},
-			{date: "2002", price: "145"},
-			{date: "2003", price: "241"},
-			{date: "2004", price: "101"},
-			{date: "2005", price: "90"},
-			{date: "2006", price: "10"},
-			{date: "2007", price: "35"},
-			{date: "2008", price: "21"},
-			{date: "2009", price: "201"}
-		]
-		},
-		{
-		name: "Canada",
-		values: [
-			{date: "2000", price: "200"},
-			{date: "2001", price: "120"},
-			{date: "2002", price: "33"},
-			{date: "2003", price: "21"},
-			{date: "2004", price: "51"},
-			{date: "2005", price: "190"},
-			{date: "2006", price: "120"},
-			{date: "2007", price: "85"},
-			{date: "2008", price: "221"},
-			{date: "2009", price: "101"}
-		]
-		},
-		{
-		name: "Maxico",
-		values: [
-			{date: "2000", price: "50"},
-			{date: "2001", price: "10"},
-			{date: "2002", price: "5"},
-			{date: "2003", price: "71"},
-			{date: "2004", price: "20"},
-			{date: "2005", price: "9"},
-			{date: "2006", price: "220"},
-			{date: "2007", price: "235"},
-			{date: "2008", price: "61"},
-			{date: "2009", price: "10"}
-		]
-		}
-	];
-	
+		const chart = d3.select("#chart");
+
+		d3.csv("src/dataset.csv").then(function(data){
+			chart
+				.selectAll("p")
+				.data(data)
+				.enter()
+        		.append("p")
+				.text(function(d) {
+					 rep = d.name + ", " + d.title;
+           			 return rep;
+        		});
+		});
+		
+		/*
+		d3.csv("../src/dataset.csv").then(({data}) => {
+			for (var i = 0; i < data.length; i++) {
+        		console.log(data[i].name);
+        		console.log(data[i].title);
+   		    }
+			el
+			.selectAll("p")
+			.data(data)
+			.join("p")
+			.text((d) => d.Name)
+		});
+		*/
+		
+
+	/*
 	var width = 500;
 	var height = 300;
 	var margin = 50;
@@ -80,7 +62,6 @@
 	var circleRadiusHover = 6;
 	
 	
-	/* Format Data */
 	var parseDate = d3.timeParse("%Y");
 	data.forEach(function(d) { 
 		d.values.forEach(function(d) {
@@ -90,7 +71,6 @@
 	});
 	
 	
-	/* Scale */
 	var xScale = d3.scaleTime()
 		.domain(d3.extent(data[0].values, d => d.date))
 		.range([0, width-margin]);
@@ -101,15 +81,14 @@
 	
 	var color = d3.scaleOrdinal(d3.schemeCategory10);
 	
-	/* Add SVG */
+
 	var svg = d3.select("#chart").append("svg")
 		.attr("width", (width+margin)+"px")
 		.attr("height", (height+margin)+"px")
 		.append('g')
 		.attr("transform", `translate(${margin}, ${margin})`);
 	
-	
-	/* Add line into SVG */
+
 	var line = d3.line()
 		.x(d => xScale(d.date))
 		.y(d => yScale(d.price));
@@ -159,7 +138,7 @@
 		});
 	
 	
-	/* Add circles in the line */
+
 	lines.selectAll("circle-group")
 		.data(data).enter()
 		.append("g")
@@ -203,7 +182,7 @@
 			});
 	
 	
-	/* Add Axis into SVG */
+
 	var xAxis = d3.axisBottom(xScale).ticks(5);
 	var yAxis = d3.axisLeft(yScale).ticks(5);
 	
@@ -220,6 +199,7 @@
 		.attr("transform", "rotate(-90)")
 		.attr("fill", "#000")
 		.text("Total values");
+		*/
 	</script>
 
 </body>
