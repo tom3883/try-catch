@@ -1,15 +1,35 @@
 library(dplyr)
 
-artists <- read.csv("src/filtered_artists.csv")
+# uploading datasets
 
-artists_columns <- artists %>% select(name, location.country)
+## artists <- read.csv("src/filtered_artists.csv", quote = "")
+## 
+## View(artists)
+## 
+## #artists_columns <- artists %>% select(name, location.country)
+## 
+## songs <- read.csv("src/filtered_songs.csv")
+## 
+## View(songs)
+## 
+## joined_data <- songs  %>% inner_join(artists, by = "name")
+## 
+## write.csv(joined_data, "src/dataset.csv", row.names = FALSE)
 
-songs <- read.csv("wasabi_songs.csv")
 
-songs_columns <- songs %>%
-  filter(complete.cases(.)) %>%
-  select(title, artist, language_detect, rank, publicationDate, genre)
 
-joined_data <- songs_columns  %>% left_join(artists_columns, by = c("artist" = "name"))
+# data preprocessing
 
-write.csv(artists_columns, "src/filtered_songs.csv", row.names = FALSE)
+# remove incoherent country values
+## val <- "[Worldwide]"
+## dataset <- dataset[dataset$'location.country' != val, ]
+## 
+## dataset$'location.country'[dataset$'location.country'== "Costa Mesa" ] <- "United States"
+## dataset$'location.country'[dataset$'location.country'== "Quebec" ] <- "Canada"
+## dataset$'location.country'[dataset$'location.country'== "São Paulo" ] <- "Brazil"
+
+print("Countries : \n")
+unique_values <- unique(dataset[['location.country']])
+print(unique_values)
+      
+      
