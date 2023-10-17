@@ -1,0 +1,12 @@
+h1 {
+    color : #b8b8b8;
+}
+
+.tooltip {
+    position: absolute;
+    z-index: 10; /* to be in front of all other elements */ 
+    display: none; /* initially invisible */ 
+    background-color: #fff;
+    box-shadow: 10px 5px 5px #ccc;
+    padding: 3px;
+}

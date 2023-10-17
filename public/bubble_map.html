@@ -5,12 +5,14 @@
 
     <!-- Load d3.js -->
     <script src="https://d3js.org/d3.v6.js"></script>
+    <link rel="stylesheet" type="text/css" href="bubble_map.css">
 </head>
 
 <body>
     <h1>Bubble map</h1>
 
     <svg id="my_dataviz" width="1200" height="630"></svg>
+    <div class="tooltip"></div>
 
     <script>
         // The svg
@@ -24,22 +26,22 @@
             .scale(150)       // This is like the zoom
             .translate([width / 2, height / 2]);
 
+        // Show the map
+        d3.json("/src/world.geojson").then(function(dataGeo) {
+            svg.append("g")
+                .selectAll("path")
+                .data(dataGeo.features)
+                .join("path")
+                    .attr("fill", "#b8b8b8")
+                    .attr("d", d3.geoPath()
+                        .projection(projection)
+                    )
+                .style("stroke", "none")
+                .style("opacity", .3)
+        });
+
         // Load bubble data
         d3.csv("/src/bubble_dataset.csv").then(function(data) {
-
-            // Show the map
-            d3.json("/src/world.geojson").then(function(dataGeo) {
-                svg.append("g")
-                    .selectAll("path")
-                    .data(dataGeo.features)
-                    .join("path")
-                        .attr("fill", "#b8b8b8")
-                        .attr("d", d3.geoPath()
-                            .projection(projection)
-                        )
-                    .style("stroke", "none")
-                    .style("opacity", .3)
-            });
 
             const filteredData = data.filter(d => +d.year === 2015);
 
@@ -62,6 +64,18 @@
                 .attr("cy", d => projection([d.x, d.y])[1])
                 .attr("r", d => size(+d.song_count))
                 .style("fill", d => color(d.country_name));
+            
+            svg.selectAll('circle').on('mouseover', function(event, d){
+                let x = event.pageX, y = event.pageY; // get the mouse coordinates
+                let countryName = event.target.__data__.country_name;
+                
+                d3.select(".tooltip")
+                    .style("display", "block")
+                    .style("left", x + "px").style("top", y + "px") //place the tooltip at the mouse position
+                    .html("Country " + d.country_name)
+
+            }).on("mouseout", function(d) { d3.select("div.tooltip").style("display", "none") });
+
         });
     </script>
 
