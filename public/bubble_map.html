@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <!-- Load d3.js -->
+    <script src="https://d3js.org/d3.v6.js"></script>
+</head>
+
+<body>
+    <p>Bubble map</p>
+    <!-- Create an element where the map will take place -->
+    <svg id="my_dataviz" width="1200" height="630"></svg>
+
+    <script>
+        // The svg
+        const svg = d3.select("svg"),
+            width = +svg.attr("width"),
+            height = +svg.attr("height");
+        
+        // Map and projection
+        const projection = d3.geoMercator()
+            .center([0,20])                // GPS of location to zoom on
+            .scale(99)                       // This is like the zoom
+            .translate([ width/2, height/2 ])
+
+        Promise.all([
+            d3.csv("/src/geo_data.csv"),
+            d3.csv("/src/dataset.csv")
+            ]).then(function (initialize) { 
+            
+            let dataGeo = initialize[0]
+            let data = initialize[1]
+
+            const color = d3.scaleOrdinal()
+                .domain(data.map(d => d.homecontinent))
+                .range(d3.schemePaired);
+                
+            // add scale for bubble size
+            const valueExtent = d3.extent(data, d => +d.n)
+
+            const size = d3.scaleSqrt()
+                .domain(valueExtent)  // What's in the data
+                .range([ 1, 50])  // Size in pixel
+            
+            
+        });
+
+    </script>
+
+</body>
+</html>

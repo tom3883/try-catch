@@ -11,7 +11,7 @@ centroids <- gCentroid(wmap, byid=TRUE)
 df <- as.data.frame(centroids)
 head(df)
 
-write.csv(df, "../src/geo_data.csv")
+write.csv(df, "../public/src/geo_data.csv")
 
 # plot
 plot(centroids)
