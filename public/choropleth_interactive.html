@@ -39,20 +39,64 @@
             .attr("font-size", "24px")
             .attr("fill", "#b8b8b8");
 
+        //const years = [2012, 2013, 2014, 2015, 2016, 2017];
+        let years = [];
+        let interval;
+        
+        // Read the years
+        d3.csv("/src/choropleth_dataset.csv").then(function (data) {
+            data.forEach(function (d) {
+                const year = +d.year;
+                if (!years.includes(year)) {
+                    years.push(year); // Add unique years to the array
+                }
+            });
+
+            updateMapForYears(years);
+            
+            interval = setInterval(updateMapForYears, 300, years);
+        });
+
+        function updateMapForYears(years) {
+            if (years.length > 0) {
+                const year = years.shift();
+                updateMapForYear(year);
+            } else {
+                clearInterval(interval);
+            }
+        }
+
+        let cumulativeSongCount = new Map();
+
+        // each country is initialized to a song count of 0 
+        d3.json("/src/world.geojson").then(function (dataGeo) {
+
+            dataGeo.features.forEach(function (country) {
+                cumulativeSongCount.set(country.id, 0);
+            });
+        })
+
         function updateMapForYear(year) {
             d3.json("/src/world.geojson").then(function (dataGeo) {
                 d3.csv("/src/choropleth_dataset.csv").then(function (dataMusic) {
                     const filteredData = dataMusic.filter(d => +d.year === year);
-                    let songs_count_per_year = [];
+                    let songs_count = [];
 
                     filteredData.forEach(d => {
-                        songs_count_per_year.push(+d.song_count);
+                        geoCountry = dataGeo.features.find(data => data.id == d.id);
+                        
+                        //if there is data for a country for a  year
+                        if(geoCountry) {
+                            total_song_count_country = cumulativeSongCount.get(d.id) + +d.song_count;
+                            cumulativeSongCount.set(d.id, total_song_count_country);
+                            songs_count.push(total_song_count_country);
+                        }
                     });
 
                     const quantiles = [0, 0.25, 0.5, 0.75, 1];
 
                     const quantileValues = quantiles.map(quantile => {
-                        return d3.quantile(songs_count_per_year, quantile);
+                        return d3.quantile(songs_count, quantile);
                     });
 
                     const colorScale = d3.scaleThreshold()
@@ -62,7 +106,7 @@
                     // Clear existing map
                     svg.selectAll("g").remove();
 
-                    svg.append("g")
+                    const countryPaths = svg.append("g")
                         .selectAll("path")
                         .data(dataGeo.features)
                         .join("path")
@@ -74,35 +118,21 @@
                         // set the color of each country
                         .attr("fill", function (d) {
                             const countryId = d.id;
-                            const countryData = filteredData.find(data => data.id == countryId);
-
-                            d.total = 0;
-                            if (countryData) {
-                                d.total = +countryData.song_count;
-                            }
-
-                            return colorScale(d.total);
+                            
+                            return colorScale(cumulativeSongCount.get(countryId));
                         })
                         
+                    countryPaths.transition()
+                        .duration(300) // Adjust the duration as needed
+                        .attr("fill", function (d) {
+                            const countryId = d.id;
+                            return colorScale(cumulativeSongCount.get(countryId));
+                        });
+
                     yearDisplay.text("Year: " + year);
                 });
             });
         }
-
-        const years = [2012, 2013, 2014, 2015, 2016, 2017];
-        let currentYearIndex = 0;
-
-        function updateMap() {
-            updateMapForYear(years[currentYearIndex]);
-
-            currentYearIndex++;
-
-            if (currentYearIndex >= years.length) {
-                clearInterval(interval);
-            }
-        }
-
-        const interval = setInterval(updateMap, 2000);
 
     </script>
 
