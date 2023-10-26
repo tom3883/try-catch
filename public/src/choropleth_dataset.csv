@@ -1,0 +1,324 @@
+year,country_name,id,song_count
+1910,United States,USA,12
+1951,United States,USA,1
+1958,United States,USA,1
+1960,United States,USA,2
+1963,United States,USA,1
+1970,United States,USA,6
+1972,United States,USA,12
+1976,United States,USA,1
+1977,United States,USA,1
+1980,United Kingdom,GBR,1
+1983,United States,USA,6
+1984,United Kingdom,GBR,28
+1984,United States,USA,5
+1985,Canada,CAN,20
+1985,United Kingdom,GBR,13
+1986,Germany,DEU,8
+1986,United Kingdom,GBR,7
+1986,United States,USA,6
+1987,Canada,CAN,5
+1987,United Kingdom,GBR,7
+1987,United States,USA,25
+1988,Belgium,BEL,6
+1988,Germany,DEU,16
+1988,Italy,ITA,2
+1988,United Kingdom,GBR,11
+1988,United States,USA,27
+1989,Canada,CAN,10
+1989,Germany,DEU,14
+1989,United Kingdom,GBR,6
+1989,United States,USA,44
+1990,Belgium,BEL,1
+1990,Canada,CAN,4
+1990,France,FRA,2
+1990,Germany,DEU,10
+1990,United Kingdom,GBR,21
+1990,United States,USA,24
+1991,Belgium,BEL,17
+1991,Canada,CAN,10
+1991,United Kingdom,GBR,2
+1991,United States,USA,90
+1992,Ireland,IRL,104
+1992,Italy,ITA,2
+1992,Jamaica,JAM,1
+1992,United Kingdom,GBR,31
+1992,United States,USA,41
+1993,Belgium,BEL,3
+1993,Canada,CAN,1
+1993,United Kingdom,GBR,4
+1993,United States,USA,140
+1994,Belgium,BEL,4
+1994,Germany,DEU,8
+1994,Ireland,IRL,1
+1994,United Kingdom,GBR,9
+1994,United States,USA,38
+1995,Belgium,BEL,8
+1995,Denmark,DNK,3
+1995,Finland,FIN,5
+1995,France,FRA,7
+1995,United Kingdom,GBR,21
+1995,United States,USA,123
+1996,Belgium,BEL,9
+1996,Denmark,DNK,4
+1996,Finland,FIN,15
+1996,Germany,DEU,13
+1996,Italy,ITA,2
+1996,Jamaica,JAM,9
+1996,United Kingdom,GBR,8
+1996,United States,USA,68
+1997,Belgium,BEL,23
+1997,Canada,CAN,1
+1997,Denmark,DNK,1
+1997,Japan,JPN,2
+1997,Sweden,SWE,5
+1997,United Kingdom,GBR,71
+1997,United States,USA,91
+1998,Denmark,DNK,1
+1998,Finland,FIN,9
+1998,France,FRA,4
+1998,Germany,DEU,27
+1998,Ireland,IRL,10
+1998,Jamaica,JAM,1
+1998,United Kingdom,GBR,187
+1998,United States,USA,220
+1999,Austria,AUT,1
+1999,Brazil,BRA,5
+1999,France,FRA,1
+1999,Germany,DEU,2
+1999,Japan,JPN,1
+1999,New Zealand,NZL,2
+1999,United Kingdom,GBR,129
+1999,United States,USA,171
+2000,Austria,AUT,9
+2000,Finland,FIN,9
+2000,Italy,ITA,6
+2000,Japan,JPN,1
+2000,United Kingdom,GBR,114
+2000,United States,USA,270
+2001,Belgium,BEL,9
+2001,Finland,FIN,45
+2001,France,FRA,2
+2001,Germany,DEU,2
+2001,Ireland,IRL,13
+2001,Italy,ITA,2
+2001,Sweden,SWE,10
+2001,United Kingdom,GBR,92
+2001,United States,USA,253
+2002,Australia,AUS,1
+2002,Canada,CAN,15
+2002,France,FRA,10
+2002,Germany,DEU,18
+2002,Japan,JPN,5
+2002,Russia,RUS,1
+2002,Sweden,SWE,10
+2002,Turkey,TUR,50
+2002,United Kingdom,GBR,267
+2002,United States,USA,367
+2003,Finland,FIN,18
+2003,France,FRA,18
+2003,Germany,DEU,1
+2003,Jamaica,JAM,4
+2003,Japan,JPN,16
+2003,South Africa,ZAF,1
+2003,Turkey,TUR,40
+2003,United Kingdom,GBR,96
+2003,United States,USA,507
+2004,Brazil,BRA,1
+2004,Canada,CAN,16
+2004,France,FRA,2
+2004,Germany,DEU,15
+2004,Ireland,IRL,1
+2004,Jamaica,JAM,1
+2004,Japan,JPN,3
+2004,Netherlands,NLD,33
+2004,Norway,NOR,1
+2004,Saint Vincent and The Grenadines,VCT,13
+2004,Slovakia,SVK,1
+2004,Sweden,SWE,19
+2004,Turkey,TUR,40
+2004,United Kingdom,GBR,76
+2004,United States,USA,599
+2005,Austria,AUT,2
+2005,Canada,CAN,16
+2005,Denmark,DNK,15
+2005,France,FRA,1
+2005,Germany,DEU,2
+2005,Ireland,IRL,3
+2005,Italy,ITA,3
+2005,Mexico,MEX,11
+2005,Sweden,SWE,16
+2005,United Kingdom,GBR,652
+2005,United States,USA,1176
+2006,Australia,AUS,117
+2006,Austria,AUT,1
+2006,Belgium,BEL,96
+2006,Brazil,BRA,1
+2006,Canada,CAN,88
+2006,Denmark,DNK,6
+2006,Finland,FIN,45
+2006,France,FRA,4
+2006,Germany,DEU,3
+2006,Italy,ITA,2
+2006,Jamaica,JAM,1
+2006,Japan,JPN,7
+2006,Mexico,MEX,3
+2006,Netherlands,NLD,173
+2006,Philippines,PHL,2
+2006,Saint Vincent and The Grenadines,VCT,1
+2006,Slovakia,SVK,9
+2006,Sweden,SWE,46
+2006,Turkey,TUR,30
+2006,United Kingdom,GBR,279
+2006,United States,USA,1091
+2007,Australia,AUS,9
+2007,Belgium,BEL,1
+2007,Bosnia and Herzegovina,BIH,26
+2007,Canada,CAN,3
+2007,Finland,FIN,130
+2007,France,FRA,5
+2007,Germany,DEU,20
+2007,Ireland,IRL,3
+2007,Italy,ITA,5
+2007,Jamaica,JAM,9
+2007,Japan,JPN,15
+2007,Netherlands,NLD,1
+2007,New Zealand,NZL,1
+2007,Puerto Rico,PRI,3
+2007,Sweden,SWE,10
+2007,United Kingdom,GBR,351
+2007,United States,USA,1231
+2008,Australia,AUS,3
+2008,Canada,CAN,7
+2008,Denmark,DNK,12
+2008,Finland,FIN,120
+2008,France,FRA,2
+2008,Germany,DEU,25
+2008,Hungary,HUN,7
+2008,Ireland,IRL,2
+2008,Jamaica,JAM,14
+2008,Japan,JPN,1
+2008,Netherlands,NLD,144
+2008,Philippines,PHL,9
+2008,Poland,POL,4
+2008,Spain,ESP,5
+2008,Sweden,SWE,332
+2008,United Kingdom,GBR,266
+2008,United States,USA,1340
+2009,Argentina,ARG,1
+2009,Australia,AUS,1
+2009,Belgium,BEL,4
+2009,Canada,CAN,89
+2009,Finland,FIN,50
+2009,France,FRA,10
+2009,Germany,DEU,5
+2009,Italy,ITA,5
+2009,Jamaica,JAM,15
+2009,Japan,JPN,44
+2009,Moldova,MDA,1
+2009,Netherlands,NLD,28
+2009,Philippines,PHL,6
+2009,Saint Vincent and The Grenadines,VCT,1
+2009,South Africa,ZAF,8
+2009,Sweden,SWE,2
+2009,United Kingdom,GBR,163
+2009,United States,USA,1479
+2010,Australia,AUS,11
+2010,Belgium,BEL,4
+2010,Canada,CAN,65
+2010,Cuba,CUB,1
+2010,Germany,DEU,64
+2010,Ireland,IRL,18
+2010,Jamaica,JAM,5
+2010,Netherlands,NLD,45
+2010,Philippines,PHL,1
+2010,Poland,POL,2
+2010,Spain,ESP,1
+2010,Sweden,SWE,11
+2010,United Kingdom,GBR,105
+2010,United States,USA,855
+2011,Australia,AUS,5
+2011,Bosnia and Herzegovina,BIH,11
+2011,Brazil,BRA,1
+2011,Canada,CAN,17
+2011,Denmark,DNK,9
+2011,Finland,FIN,60
+2011,Germany,DEU,2
+2011,Greece,GRC,8
+2011,Italy,ITA,1
+2011,Japan,JPN,1
+2011,Netherlands,NLD,18
+2011,Poland,POL,3
+2011,South Africa,ZAF,80
+2011,Sweden,SWE,131
+2011,United Kingdom,GBR,176
+2011,United States,USA,848
+2012,Australia,AUS,10
+2012,Belgium,BEL,1
+2012,Canada,CAN,17
+2012,Italy,ITA,19
+2012,Poland,POL,6
+2012,South Africa,ZAF,8
+2012,Sweden,SWE,2
+2012,United Kingdom,GBR,193
+2012,United States,USA,167
+2013,Australia,AUS,20
+2013,Belgium,BEL,56
+2013,Brazil,BRA,5
+2013,Canada,CAN,8
+2013,Finland,FIN,40
+2013,Germany,DEU,73
+2013,Jamaica,JAM,2
+2013,Netherlands,NLD,33
+2013,Norway,NOR,3
+2013,Poland,POL,1
+2013,South Africa,ZAF,8
+2013,Sweden,SWE,55
+2013,United Kingdom,GBR,41
+2013,United States,USA,401
+2014,Australia,AUS,1
+2014,Belgium,BEL,8
+2014,Brazil,BRA,40
+2014,Canada,CAN,10
+2014,Denmark,DNK,1
+2014,Finland,FIN,5
+2014,France,FRA,4
+2014,Germany,DEU,44
+2014,India,IND,3
+2014,Italy,ITA,39
+2014,Moldova,MDA,5
+2014,Netherlands,NLD,6
+2014,Poland,POL,2
+2014,Puerto Rico,PRI,2
+2014,Sweden,SWE,56
+2014,United Kingdom,GBR,105
+2014,United States,USA,415
+2015,Australia,AUS,3
+2015,Belgium,BEL,583
+2015,Canada,CAN,29
+2015,Denmark,DNK,65
+2015,Finland,FIN,55
+2015,Germany,DEU,81
+2015,Ireland,IRL,42
+2015,Japan,JPN,9
+2015,Moldova,MDA,55
+2015,Netherlands,NLD,15
+2015,Poland,POL,15
+2015,South Africa,ZAF,16
+2015,South Korea,KOR,9
+2015,Sweden,SWE,11
+2015,United Kingdom,GBR,105
+2015,United States,USA,974
+2016,Bosnia and Herzegovina,BIH,2
+2016,Germany,DEU,2
+2016,Italy,ITA,1
+2016,Jamaica,JAM,2
+2016,Netherlands,NLD,2
+2016,Saint Vincent and The Grenadines,VCT,1
+2016,United Kingdom,GBR,208
+2016,United States,USA,83
+2017,Canada,CAN,39
+2017,Jamaica,JAM,1
+2017,Netherlands,NLD,1
+2017,United Kingdom,GBR,1
+2017,United States,USA,8

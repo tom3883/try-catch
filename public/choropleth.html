@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <!-- Load d3.js -->
+    <script src="https://d3js.org/d3.v6.js"></script>
+    <link rel="stylesheet" type="text/css" href="choropleth.css">
+</head>
+
+<body>
+    <h1>Choropleth map</h1>
+
+    <svg id="my_dataviz" width="1200" height="630"></svg>
+    <div class="tooltip"></div>
+
+    <script>
+        // The svg
+        const svg = d3.select("svg"),
+            width = +svg.attr("width"),
+            height = +svg.attr("height");
+
+        // Map and projection
+        var path = d3.geoPath();
+        const projection = d3.geoMercator()
+            .center([0, 20])
+            .scale(150)
+            .translate([width / 2, height / 2]);
+
+        let data = new Map()
+        const colorScale = d3.scaleThreshold()
+            .domain([100000, 1000000, 10000000, 30000000, 100000000, 500000000]) //default domain
+            .range(d3.schemeBlues[7]);
+
+        // Show the map
+        d3.json("/src/world.geojson").then(function(dataGeo) {
+            d3.csv("/src/choropleth_dataset.csv").then(function(dataMusic) {
+                const filteredData = dataMusic.filter(d => +d.year === 2012);
+                let songs_count_per_year = [];
+
+                filteredData.forEach(d => {
+                    songs_count_per_year.push(+d.song_count);
+                });
+
+                const quantiles = [0, 0.25, 0.5, 0.75, 1];
+                
+                const quantileValues = quantiles.map(quantile => {
+                    return d3.quantile(songs_count_per_year, quantile);
+                });
+
+                const colorScale = d3.scaleThreshold()
+                    .domain(quantileValues)
+                    .range(d3.schemeBlues[7]);
+
+                svg.append("g")
+                .selectAll("path")
+                .data(dataGeo.features)
+                .join("path")
+                // draw each country
+                .attr("d", d3.geoPath()
+                    .projection(projection)
+                )
+                .attr("stroke", "#b8b8b8")
+                // set the color of each country
+                .attr("fill", function (d) {
+                    const countryId = d.id;
+                    const countryData = filteredData.find(data => data.id == countryId);
+
+                    d.total = 0;
+                    if(countryData){
+                        d.total = +countryData.song_count;
+                    }
+
+                    return colorScale(d.total);
+                })
+            });
+        });
+
+    </script>
+
+</body>
+</html>
