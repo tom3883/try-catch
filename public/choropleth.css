@@ -8,3 +8,12 @@
 .yearSelection :first-child {
     padding-right: 0.5em;
 }
+
+.tooltip {
+    position: absolute;
+    z-index: 10; /* to be in front of all other elements */ 
+    display: none; /* initially invisible */ 
+    background-color: #fff;
+    box-shadow: 10px 5px 5px #ccc;
+    padding: 3px;
+}
