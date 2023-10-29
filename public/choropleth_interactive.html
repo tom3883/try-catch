@@ -5,13 +5,13 @@
 
     <!-- Load d3.js -->
     <script src="https://d3js.org/d3.v6.js"></script>
-    <link rel="stylesheet" type="text/css" href="choropleth.css">
+    <link rel="stylesheet" type="text/css" href="choropleth_interactive.css">
 </head>
 
 <body>
-    <h1>Choropleth map</h1>
+    <h1>Interactive Choropleth Map</h1>
 
-    <svg id="my_dataviz" width="1200" height="630"></svg>
+    <svg id="choropleth_interactive" width="1200" height="630"></svg>
     <div class="tooltip"></div>
 
     <script>
@@ -39,7 +39,6 @@
             .attr("font-size", "24px")
             .attr("fill", "#b8b8b8");
 
-        //const years = [2012, 2013, 2014, 2015, 2016, 2017];
         let years = [];
         let interval;
         
@@ -54,7 +53,7 @@
 
             updateMapForYears(years);
             
-            interval = setInterval(updateMapForYears, 300, years);
+            interval = setInterval(updateMapForYears, 500, years);
         });
 
         function updateMapForYears(years) {
@@ -121,6 +120,17 @@
                             
                             return colorScale(cumulativeSongCount.get(countryId));
                         })
+                        .on("mouseover", function (event, d) {
+                        let x = event.pageX, y = event.pageY; // get the mouse coordinates
+                        let country_name = d.properties.name;
+                        let song_count = cumulativeSongCount.get(d.id);
+        
+                        d3.select(".tooltip")
+                            .style("display", "block")
+                            .style("left", x + "px").style("top", y + "px") //place the tooltip at the mouse position
+                            .html("Country: " + country_name + "<br>Song Count: " + song_count)
+                        }).on("mouseout", function(d) { d3.select(".tooltip").style("display", "none") });
+
                         
                     countryPaths.transition()
                         .duration(300) // Adjust the duration as needed
