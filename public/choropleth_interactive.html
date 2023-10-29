@@ -3,13 +3,19 @@
 <head>
     <meta charset="utf-8">
 
-    <!-- Load d3.js -->
     <script src="https://d3js.org/d3.v6.js"></script>
-    <link rel="stylesheet" type="text/css" href="choropleth_interactive.css">
+    <link rel="stylesheet" type="text/css" href="choropleth.css">
 </head>
 
 <body>
-    <h1>Interactive Choropleth Map</h1>
+    <h1>Animated Choropleth Map</h1>
+
+    <p>Press the play button to start the animation</p>
+    <div>
+        <button id="playButton">Play</button>
+        <button id="pauseButton">Pause</button>
+        <button id="resetButton">Reset</button>
+    </div>
 
     <svg id="choropleth_interactive" width="1200" height="630"></svg>
     <div class="tooltip"></div>
@@ -27,8 +33,6 @@
             .scale(150)
             .translate([width / 2, height / 2]);
 
-        let data = new Map()
-        
         const colorScale = d3.scaleThreshold()
             .domain([100000, 1000000, 10000000, 30000000, 100000000, 500000000]) //default domain
             .range(d3.schemeBlues[7]);
@@ -39,35 +43,12 @@
             .attr("font-size", "24px")
             .attr("fill", "#b8b8b8");
 
-        let years = [];
-        let interval;
-        
         // Read the years
-        d3.csv("/src/choropleth_dataset.csv").then(function (data) {
-            data.forEach(function (d) {
-                const year = +d.year;
-                if (!years.includes(year)) {
-                    years.push(year); // Add unique years to the array
-                }
-            });
-
-            updateMapForYears(years);
-            
-            interval = setInterval(updateMapForYears, 500, years);
-        });
-
-        function updateMapForYears(years) {
-            if (years.length > 0) {
-                const year = years.shift();
-                updateMapForYear(year);
-            } else {
-                clearInterval(interval);
-            }
-        }
+        let data = new Map();
 
         let cumulativeSongCount = new Map();
 
-        // each country is initialized to a song count of 0 
+        // Each country is initialized to a song count of 0
         d3.json("/src/world.geojson").then(function (dataGeo) {
 
             dataGeo.features.forEach(function (country) {
@@ -75,7 +56,7 @@
             });
         })
 
-        function updateMapForYear(year) {
+        function updateMap(year) {
             d3.json("/src/world.geojson").then(function (dataGeo) {
                 d3.csv("/src/choropleth_dataset.csv").then(function (dataMusic) {
                     const filteredData = dataMusic.filter(d => +d.year === year);
@@ -83,9 +64,9 @@
 
                     filteredData.forEach(d => {
                         geoCountry = dataGeo.features.find(data => data.id == d.id);
-                        
+
                         //if there is data for a country for a  year
-                        if(geoCountry) {
+                        if (geoCountry) {
                             total_song_count_country = cumulativeSongCount.get(d.id) + +d.song_count;
                             cumulativeSongCount.set(d.id, total_song_count_country);
                             songs_count.push(total_song_count_country);
@@ -117,21 +98,22 @@
                         // set the color of each country
                         .attr("fill", function (d) {
                             const countryId = d.id;
-                            
+
                             return colorScale(cumulativeSongCount.get(countryId));
                         })
                         .on("mouseover", function (event, d) {
-                        let x = event.pageX, y = event.pageY; // get the mouse coordinates
-                        let country_name = d.properties.name;
-                        let song_count = cumulativeSongCount.get(d.id);
-        
-                        d3.select(".tooltip")
-                            .style("display", "block")
-                            .style("left", x + "px").style("top", y + "px") //place the tooltip at the mouse position
-                            .html("Country: " + country_name + "<br>Song Count: " + song_count)
-                        }).on("mouseout", function(d) { d3.select(".tooltip").style("display", "none") });
+                            let x = event.pageX, y = event.pageY; // get the mouse coordinates
+                            let country_name = d.properties.name;
+                            let song_count = cumulativeSongCount.get(d.id);
 
-                        
+                            d3.select(".tooltip")
+                                .style("display", "block")
+                                .style("left", x + "px").style("top", y + "px") //place the tooltip at the mouse position
+                                .html("Country: " + country_name + "<br>Song Count: " + song_count)
+                        }).on("mouseout", function (d) {
+                            d3.select(".tooltip").style("display", "none")
+                        });
+
                     countryPaths.transition()
                         .duration(300) // Adjust the duration as needed
                         .attr("fill", function (d) {
@@ -144,7 +126,57 @@
             });
         }
 
-    </script>
+        let years = [];
+        let interval;
+        let index = 0;
 
+        loadYears(function (years) {
+            updateMap(years[0]);
+            // Once years are loaded we can start playing the animation
+            playAnimation();
+        })
+
+        function loadYears(callback) { // reading in a file is an asynchronous task
+            d3.csv("/src/choropleth_dataset.csv").then(function (data) {
+                years = [...new Set(data.map(d => +d.year))];
+                callback(years);
+            });
+        }
+
+        let isPlaying = false; // Track the animation state
+
+        const playButton = document.getElementById("playButton");
+        const pauseButton = document.getElementById("pauseButton");
+        const resetButton = document.getElementById("resetButton");
+
+        // Event listeners for the buttons
+        playButton.addEventListener("click", function () {
+            if (!isPlaying) {
+                isPlaying = true;
+                playAnimation();
+            }
+        });
+
+        pauseButton.addEventListener("click", function () {
+            isPlaying = false;
+        });
+
+        resetButton.addEventListener("click", function () {
+            isPlaying = false;
+            index = 0;
+            updateMap(years[0]);
+        });
+
+        function playAnimation() {
+            if (isPlaying && index < years.length) {
+                updateMap(years[index]);
+                index++;
+                setTimeout(playAnimation, 500); // the animation speed
+            } else {
+                isPlaying = false;
+            }
+        }
+
+    </script>
 </body>
 </html>
