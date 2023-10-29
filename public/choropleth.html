@@ -2,7 +2,6 @@
 <html>
 <head>
     <meta charset="utf-8">
-
     <!-- Load d3.js -->
     <script src="https://d3js.org/d3.v6.js"></script>
     <link rel="stylesheet" type="text/css" href="choropleth.css">
@@ -11,8 +10,14 @@
 <body>
     <h1>Choropleth map</h1>
 
-    <svg id="my_dataviz" width="1200" height="630"></svg>
-    <div class="tooltip"></div>
+    <div class="yearSelection">
+        <p>Select a year to update the map : </p>
+        <select id="yearDropdown"></select>
+    </div>
+
+    <div>
+        <svg id="choropleth" width="1200" height="630"></svg>
+    </div>
 
     <script>
         // The svg
@@ -32,49 +37,86 @@
             .domain([100000, 1000000, 10000000, 30000000, 100000000, 500000000]) //default domain
             .range(d3.schemeBlues[7]);
 
-        // Show the map
-        d3.json("/src/world.geojson").then(function(dataGeo) {
-            d3.csv("/src/choropleth_dataset.csv").then(function(dataMusic) {
-                const filteredData = dataMusic.filter(d => +d.year === 2012);
-                let songs_count_per_year = [];
+        const yearDisplay = svg.append("text")
+            .attr("x", 10)
+            .attr("y", height - 10)
+            .attr("font-size", "24px")
+            .attr("fill", "#b8b8b8");
 
-                filteredData.forEach(d => {
-                    songs_count_per_year.push(+d.song_count);
-                });
+        loadYears(function (years) {
+            // Set an initial year to the map
+            updateMap(years[0]);
 
-                const quantiles = [0, 0.25, 0.5, 0.75, 1];
-                
-                const quantileValues = quantiles.map(quantile => {
-                    return d3.quantile(songs_count_per_year, quantile);
-                });
+            // Load the years in the dropdown
+            const dropdown = d3.select("select");         
+            years.forEach(year => {
+                const option = document.createElement("option");
+                option.value = year;
+                option.textContent = year;
+                yearDropdown.appendChild(option);
+            });
 
-                const colorScale = d3.scaleThreshold()
-                    .domain(quantileValues)
-                    .range(d3.schemeBlues[7]);
-
-                svg.append("g")
-                .selectAll("path")
-                .data(dataGeo.features)
-                .join("path")
-                // draw each country
-                .attr("d", d3.geoPath()
-                    .projection(projection)
-                )
-                .attr("stroke", "#b8b8b8")
-                // set the color of each country
-                .attr("fill", function (d) {
-                    const countryId = d.id;
-                    const countryData = filteredData.find(data => data.id == countryId);
-
-                    d.total = 0;
-                    if(countryData){
-                        d.total = +countryData.song_count;
-                    }
-
-                    return colorScale(d.total);
-                })
+            // The event listener helps us detect when a different year is selected
+            yearDropdown.addEventListener("change", function () {
+                const selectedYear = +yearDropdown.value;
+                updateMap(selectedYear);
             });
         });
+        
+        function loadYears(callback) { // reading in a file is an asynchronous task
+            d3.csv("/src/choropleth_dataset.csv").then(function(data) {
+                years = [...new Set(data.map(d => +d.year))];
+                callback(years);
+            });
+        }
+
+        // Show the map
+        function updateMap(selectedYear){
+            d3.json("/src/world.geojson").then(function(dataGeo) {
+                d3.csv("/src/choropleth_dataset.csv").then(function(dataMusic) {
+                    const filteredData = dataMusic.filter(d => +d.year == selectedYear);
+                    let songs_count_per_year = [];
+
+                    filteredData.forEach(d => {
+                        songs_count_per_year.push(+d.song_count);
+                    });
+
+                    const quantiles = [0, 0.25, 0.5, 0.75, 1];
+                    
+                    const quantileValues = quantiles.map(quantile => {
+                        return d3.quantile(songs_count_per_year, quantile);
+                    });
+
+                    const colorScale = d3.scaleThreshold()
+                        .domain(quantileValues)
+                        .range(d3.schemeBlues[7]);
+
+                    svg.append("g")
+                    .selectAll("path")
+                    .data(dataGeo.features)
+                    .join("path")
+                    // draw each country
+                    .attr("d", d3.geoPath()
+                        .projection(projection)
+                    )
+                    .attr("stroke", "#b8b8b8")
+                    // set the color of each country
+                    .attr("fill", function (d) {
+                        const countryId = d.id;
+                        const countryData = filteredData.find(data => data.id == countryId);
+
+                        d.total = 0;
+                        if(countryData){
+                            d.total = +countryData.song_count;
+                        }
+
+                        return colorScale(d.total);
+                    })
+
+                    yearDisplay.text("Year: " + selectedYear);
+                });
+            });
+        }
 
     </script>
 

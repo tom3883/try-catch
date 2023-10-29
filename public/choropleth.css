@@ -1,0 +1,10 @@
+
+.yearSelection {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.yearSelection :first-child {
+    padding-right: 0.5em;
+}
