@@ -14,26 +14,13 @@
 
 <body>
 	<div id="chart"></div>
+
 	<script>
 		let chart = d3.select("#chart"),
 			originalData = null,
 			data = null,
 			selected = {};
 
-		// display the loaded dataset
-		/*
-		d3.csv("src/dataset_song_count.csv").then(function(data){
-			chart
-				.selectAll("p")
-				.data(data)
-				.enter()
-        		.append("p")
-				.text(function(d) {
-					 rep = d.name + ", " + d.title;
-           			 return rep;
-        		});
-		});
-		*/
 
 		d3.csv("src/dataset_song_count.csv").then(file =>{
 			originalData = file
@@ -41,23 +28,12 @@
 			displayChart()
 		});
 
-		/*
-		function filterData(data) {
-			console.log("KKKKKKKKKKKKKKK")
-			let artists = data.filter(d => d.name === "A")
-			console.log("HHHHHHH")
-			console.log(artists.title)
-			return {
-				'artists': artists
-			}
-		}
-		*/
 
 		function displayChart() {
 			// set the dimensions and margins of the graph
 			var margin = {top: 10, right: 30, bottom: 30, left: 60},
-				width = 1000 - margin.left - margin.right,
-				height = 800 - margin.top - margin.bottom;
+				width = 1200 - margin.left - margin.right,
+				height = 500 - margin.top - margin.bottom;
 
 			var lineOpacity = "0.25";
 			var lineOpacityHover = "0.85";
@@ -89,14 +65,22 @@
 				.attr("transform",
 					"translate(" + margin.left + "," + margin.top + ")");
 
-			var sumstat = d3.nest() 
-						.key(function(d) { return d['location.country'];})
-						.entries(data)
+			var sumstat = d3.nest()
+				.key(function(d) { return d['location.country']; })
+				.entries(data);
+
+			// Sort the entire dataset by year in chronological order
+			data.sort(function(a, b) {
+				return a.year - b.year;
+			});
+
+			// Group the sorted data by country
+			var sumstat = d3.nest()
+				.key(function(d) { return d['location.country']; })
+				.entries(data);
 
 			// Add X axis --> it is a date format
-			var years = [1910, 1911, 1912, 1913, 1914, 1915, 1916, 1917, 1918, 1919, 1920, 1921, 1922, 1923, 1924, 1925,
-			 1926, 1927, 1928, 1929, 1930, 1931, 1932, 1933, 1934, 1935, 1936, 1937, 1938, 1939, 1940, 1941, 1942, 1943,
-			  1944, 1945, 1946, 1947, 1948, 1949, 1950, 1951, 1952, 1953, 1954, 1955, 1956, 1957, 1958, 1959, 1960, 1961,
+			var years = [1950, 1951, 1952, 1953, 1954, 1955, 1956, 1957, 1958, 1959, 1960, 1961,
 			   1962, 1963, 1964, 1965, 1966, 1967, 1968, 1969, 1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979, 
 			   1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997,
 			    1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015,
@@ -109,7 +93,7 @@
 			// Append an X-axis group to the SVG
 			var xAxis = svg.append("g")
 				.attr("transform", "translate(0," + height + ")")
-				.call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d"))); // Use d3.format to format the tick labels as integers
+				.call(d3.axisBottom(x).ticks(15).tickFormat(d3.format("d"))); // Use d3.format to format the tick labels as integers
 
 
 
@@ -123,26 +107,75 @@
 			// color palette
 			var color = d3.scaleOrdinal(d3.schemeCategory10);
 
-			/*
-			// Draw the line
-			svg.selectAll(".line")
+
+			// Create a line chart for each country
+			sumstat.forEach(function(countryData) {
+				// Draw the line for each country
+				svg.selectAll(".line")
+					.data([countryData]) // Use an array with the data for the current country
+					.enter()
+					.append("path")
+					.attr("fill", "none")
+					.attr("stroke", function(d) { return color(d.key); })
+					.attr("stroke-width", 1.5)
+					.attr("d", function(d) {
+						return d3.line()
+							.x(function(d) { return x(d.year); })
+							.y(function(d) { return y(d.song_count_per_year); })
+							(d.values);
+					});
+
+				// Add points (circles) for each data point
+				svg.selectAll(".point")
+					.data(countryData.values)
+					.enter()
+					.append("circle")
+					.attr("class", "point")
+					.attr("cx", function(d) { return x(d.year); })
+					.attr("cy", function(d) { return y(d.song_count_per_year); })
+					.attr("r", 4) // Adjust the radius of the circles
+					.style("fill", function(d) { return color(countryData.key); });
+
+					/*
+				// Add text labels for years on the points
+				svg.selectAll(".year-label")
+					.data(countryData.values)
+					.enter()
+					.append("text")
+					.attr("class", "year-label")
+					.attr("x", function(d) { return x(d.year); })
+					.attr("y", function(d) { return y(d.song_count_per_year); })
+					.attr("dy", -10) // Adjust the vertical positioning of the year labels
+					.attr("text-anchor", "middle") // Center the text horizontally
+					.text(function(d) { return d.year; });
+					*/
+			});
+
+			// Create a legend
+			var legend = svg.selectAll(".legend")
 				.data(sumstat)
 				.enter()
-				.append("path")
-					.attr("fill", "none")
-					.attr("stroke", function(d){ return color(d.key) })
-					.attr("stroke-width", 1.5)
-					.attr("d", function(d){
-					return d3.line()
-						.x(function(d) { return x(d.year); })
-						.y(function(d) { return y(d.song_count_per_year); })
-						(d.values)
-					})
+				.append("g")
+				.attr("class", "legend")
+				.attr("transform", function(d, i) {
+					return "translate(0," + (i * 20) + ")"; // Adjust the legend item spacing as needed
+				});
 
-					*/
+			legend.append("rect")
+				.attr("x", width - 18)
+				.attr("width", 18)
+				.attr("height", 18)
+				.style("fill", function(d) { return color(d.key); });
+
+			legend.append("text")
+				.attr("x", width - 24)
+				.attr("y", 9)
+				.attr("dy", ".35em")
+				.style("text-anchor", "end")
+				.text(function(d) { return d.key; });
 
 
-		}
+			}
 
 	</script>
 
