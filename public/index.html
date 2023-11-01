@@ -169,7 +169,7 @@
 
 			var yMax = d3.max(selectedData, function(d) {
 				return d3.max(d.values, function(item) {
-					return item.song_count_per_year;
+					return +item.song_count_per_year;
 				});
 			});
 
@@ -179,7 +179,7 @@
 					.range([0, width]);
 
 				var y = d3.scaleLinear()
-					.domain([yMin, yMax])
+					.domain([0, yMax])
 					.range([height, 0]);
 			} else {
 				var x = d3.scaleLinear()
@@ -187,7 +187,7 @@
 					.range([0, width]);
 
 				var y = d3.scaleLinear()
-					.domain([yMin, yMax])
+					.domain([0, yMax])
 					.range([height, 0]);
 			}
 
