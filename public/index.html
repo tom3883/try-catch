@@ -11,24 +11,52 @@
 	<!-- style sheet 
 	<link rel="stylesheet" type="text/css" href="style.css">-->
 	<!-- Style sheet -->
-	<style>
+    <style>
 		/* Add responsive styles for the chart container */
-		#chart {
-			width: 100%;
-			height: auto;
-			padding-bottom: 56.25%; /* 16:9 aspect ratio for the chart */
+		#chart-container {
+            width: 70%; /* Adjust the width for the chart container */
+            float: left;
+            position: relative; /* Add position: relative */
+        }
+
+        #legend-container {
+            float: left; /* Float the legend container to the left */
+            width: 30%; /* Adjust the width for the legend container */
+            height: 100%; /* Make the legend container full height */
+            position: relative; /* Add position: relative */
+			}
+
+		#menu {
+			clear: both;
 		}
-	</style>
+
+		#legend {
+			position: absolute; /* Position the legend absolutely within its container */
+			top: 0; /* Align the top of the legend with the top of the container */
+			left: 0; /* Align the left of the legend with the left of the container */
+			width: 100%; /* Make the legend full width within its container */
+			height: 100%; /* Make the legend full height within its container */
+		}
+		
+    </style>
 </head>
 
 <body>
-	<div id="menu">
-		<button id="byYear">By Year</button>
-		<button id="byPeriod">By Period</button>
-	  </div>
+    <div id="menu">
+        <button id="byYear">By Year</button>
+        <button id="byPeriod">By Period</button>
+    </div>
 
-	<div id="chart"></div>
-	<div id="legend"></div>
+	<div id="legend-container">
+        <div id="legend">
+            <!-- Add content to the legend here -->
+        </div>
+    </div>
+
+    <div id="chart-container">
+        <div id="chart"></div>
+    </div>
+
 	<script>
 		let chart = d3.select("#chart"),
 			originalData = null,
@@ -48,7 +76,7 @@
 		var song_count_per_year = new Set();
 
 		var margin = {top: 10, right: 30, bottom: 30, left: 60},
-				width = 1100 - margin.left - margin.right,
+				width = 1000 - margin.left - margin.right,
 				height = 600 - margin.top - margin.bottom;
 
 		// append the svg object to the body of the page
@@ -61,6 +89,14 @@
 				.attr("transform",
 					"translate(" + margin.left + "," + margin.top + ")");
 
+		var svg_leg = d3.select("#legend")
+			.append("svg")
+				.attr("width", width + margin.left + margin.right+ 200)
+				.attr("height", height + margin.top + margin.bottom + 200)
+			.append("g")
+				.attr("transform",
+					"translate(" + margin.left + "," + margin.top + ")");
+
 
 		d3.csv("src/dataset_song_count.csv").then(file =>{
 			originalData = file
@@ -69,8 +105,17 @@
 		});
 
 
-		// color palette
-		var color = d3.scaleOrdinal(d3.schemeCategory10);
+		// color palette  of 40 colors
+		var colors = [
+				"#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78", "#2ca02c", "#98df8a", "#d62728", "#ff9896",
+				"#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#e377c2", "#f7b6d2", "#7f7f7f", "#c7c7c7",
+				"#bcbd22", "#dbdb8d", "#17becf", "#9edae5", "#393b79", "#5254a3", "#6b6ecf", "#9c9ede",
+				"#637939", "#8ca252", "#b5cf6b", "#8c6d31", "#bd9e39", "#e7ba52", "#843c39", "#ad494a",
+				"#d6616b", "#e7969c", "#7b4173", "#a55194", "#ce6dbd", "#de9ed6"
+				];
+
+		var color = d3.scaleOrdinal(colors);
+
 
 
 		function preprocessData(){
@@ -149,6 +194,7 @@
 
 
 		function displayChart(selectedData, time, count) {
+
 			var xMin = d3.min(selectedData, function(d) {
 				return d3.min(d.values, function(item) {
 					return item.year;
@@ -244,7 +290,7 @@
 
 
 			// Create a legend
-			var legend = svg.selectAll(".legend")
+			var legend = svg_leg.selectAll(".legend")
 				.data(data)
 				.enter()
 				.append("g")
@@ -254,9 +300,10 @@
 				});
 
 			legend.append("rect")
-				.attr("x", width + 18)
-				.attr("width", 18)
-				.attr("height", 18)
+				.attr("x", width + 25)
+				.attr("y", 0)
+				.attr("width", 15)
+				.attr("height", 15)
 				.style("fill", function(d) { return color(d.key); })
 				.on("click", function(selectedCountry) {
 					// Toggle the selected country on click
@@ -271,177 +318,14 @@
 				});
 
 			legend.append("text")
-				.attr("x", width + 24)
+				.attr("x", width + 50)
 				.attr("y", 9)
 				.attr("dy", ".35em")
-				.style("text-anchor", "end")
+				.style("text-anchor", "start")
+				.style("font-family", "Arial, sans-serif") // Change the font-family
+   				 .style("font-size", "12px") // Change the font-size
 				.text(function(d) { return d.key; });
 		}
-
-
-
-
-
-
-
-
-
-		/*
-		function displayChart(selectedData, time, count){
-
-			if(time == 'year'){
-				// Create a linear scale to transform the data
-				var x = d3.scaleLinear()
-					.domain(d3.extent(years))
-					.range([0, width]);
-
-							// Create a linear scale for the y-axis
-				var y = d3.scaleLinear()
-					.domain(d3.extent(song_count_per_year))
-					.range([height, 0]);
-
-
-			}
-			else{
-				// Create a linear scale to transform the data
-				var x = d3.scaleLinear()
-					.domain(d3.extent(periods))
-					.range([0, width]);
-							// Create a linear scale for the y-axis
-				var y = d3.scaleLinear()
-					.domain(d3.extent(song_count_per_period))
-					.range([height, 0]);
-			}
-
-
-			// Append an X-axis group to the SVG
-			var xAxis = svg.append("g")
-				.attr("transform", "translate(0," + height + ")")
-				.call(d3.axisBottom(x).ticks(15).tickFormat(d3.format("d"))); // Use d3.format to format the tick labels as integers
-
-
-
-			svg.append("g")
-				.call(d3.axisLeft(y));
-
-
-
-
-
-			// Create a line chart for each country
-			selectedData.forEach(function(countryData) {
-				// Draw the line for each country
-				svg.selectAll(".line")
-					.data([countryData]) // Use an array with the data for the current country
-					.enter()
-					.append("path")
-					.attr("fill", "none")
-					.attr("stroke", function(d) { return color(d.key); })
-					.attr("stroke-width", 1.5)
-					.attr("d", function(d) {
-						return d3.line()
-							.x(function(d) { 
-								if(time == 'year') {
-									return x(d.year);
-								}
-								else
-									return x(d.periods); })
-							.y(function(d) { return y(d.song_count_per_year); })
-							(d.values);
-					});
-
-				// Add points (circles) for each data point
-				svg.selectAll(".point")
-					.data(countryData.values)
-					.enter()
-					.append("circle")
-					.attr("class", "point")
-					.attr("cx", function(d) { return x(d.year); })
-					.attr("cy", function(d) { return y(d.song_count_per_year); })
-					.attr("r", 4) // Adjust the radius of the circles
-					.style("fill", function(d) { return color(countryData.key); });
-			});
-
-
-			// Create a legend
-			var legend = svg.selectAll(".legend")
-				.data(data)
-				.enter()
-				.append("g")
-				.attr("class", "legend")
-				.attr("transform", function(d, i) {
-					return "translate(0," + (i * 20) + ")"; // Adjust the legend item spacing as needed
-				});
-
-			legend.append("rect")
-				.attr("x", width + 18)
-				.attr("width", 18)
-				.attr("height", 18)
-				.style("fill", function(d) { return color(d.key); })
-				.on("click", function(selectedCountry) {
-					// Toggle the selected country on click
-					var isSelected = !selected[selectedCountry.key];
-					selected[selectedCountry.key] = isSelected;
-					
-					// Update the legend item's opacity based on selection
-					d3.select(this).style("opacity", isSelected ? 0.5 : 1);
-					
-					// Update the chart based on the selected countries
-					updateChart();
-				});
-
-			legend.append("text")
-				.attr("x", width + 24)
-				.attr("y", 9)
-				.attr("dy", ".35em")
-				.style("text-anchor", "end")
-				.text(function(d) { return d.key; });
-
-				*/
-
-
-					/*
-
-				// Add text labels for years on the points
-				svg.selectAll(".year-label")
-					.data(countryData.values)
-					.enter()
-					.append("text")
-					.attr("class", "year-label")
-					.attr("x", function(d) { return x(d.year); })
-					.attr("y", function(d) { return y(d.song_count_per_year); })
-					.attr("dy", -10) // Adjust the vertical positioning of the year labels
-					.attr("text-anchor", "middle") // Center the text horizontally
-					.text(function(d) { return d.year; });
-				});
-				
-				*/
-
-			/*
-			// Create a legend
-			var legend = svg.selectAll(".legend")
-				.data(data)
-				.enter()
-				.append("g")
-				.attr("class", "legend")
-				.attr("transform", function(d, i) {
-					return "translate(0," + (i * 20) + ")"; // Adjust the legend item spacing as needed
-				});
-
-			legend.append("rect")
-				.attr("x", width - 18)
-				.attr("width", 18)
-				.attr("height", 18)
-				.style("fill", function(d) { return color(d.key); });
-
-			legend.append("text")
-				.attr("x", width - 24)
-				.attr("y", 9)
-				.attr("dy", ".35em")
-				.style("text-anchor", "end")
-				.text(function(d) { return d.key; });
-
-				*/
 		
 
 	</script>
