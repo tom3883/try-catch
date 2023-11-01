@@ -21,7 +21,8 @@
 			selected = {};
 
 		// display the loaded dataset
-		d3.csv("src/dataset.csv").then(function(data){
+		/*
+		d3.csv("src/dataset_song_count.csv").then(function(data){
 			chart
 				.selectAll("p")
 				.data(data)
@@ -32,13 +33,15 @@
            			 return rep;
         		});
 		});
+		*/
 
-		d3.csv("src/dataset.csv").then(file =>{
+		d3.csv("src/dataset_song_count.csv").then(file =>{
 			originalData = file
 			data = originalData
 			displayChart()
 		});
 
+		/*
 		function filterData(data) {
 			console.log("KKKKKKKKKKKKKKK")
 			let artists = data.filter(d => d.name === "A")
@@ -48,12 +51,13 @@
 				'artists': artists
 			}
 		}
+		*/
 
 		function displayChart() {
-			var width = 500;
-			var height = 300;
-			var margin = 50;
-			var duration = 250;
+			// set the dimensions and margins of the graph
+			var margin = {top: 10, right: 30, bottom: 30, left: 60},
+				width = 1000 - margin.left - margin.right,
+				height = 800 - margin.top - margin.bottom;
 
 			var lineOpacity = "0.25";
 			var lineOpacityHover = "0.85";
@@ -67,146 +71,77 @@
 			var circleRadiusHover = 6;
 
 
-			/* Format Data */
-			var parseDate = d3.timeParse("%Y");
+			// format numerical values
+			var parseDate = d3.timeFormat("%Y");
 			data.forEach(function(d) { 
-			d.values.forEach(function(d) {
-				d.date = parseDate(d.date);
-				d.price = +d.price;    
+				d.year = +d.year;
+				d.rank = +d.rank;    
+				d.song_count_per_year = +d.song_count_per_year;   
+				d.song_count_per_period = +d.song_count_per_period; 
 			});
-			});
+
+			// append the svg object to the body of the page
+			var svg = d3.select("#chart")
+			.append("svg")
+				.attr("width", width + margin.left + margin.right)
+				.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+				.attr("transform",
+					"translate(" + margin.left + "," + margin.top + ")");
+
+			var sumstat = d3.nest() 
+						.key(function(d) { return d['location.country'];})
+						.entries(data)
+
+			// Add X axis --> it is a date format
+			var years = [1910, 1911, 1912, 1913, 1914, 1915, 1916, 1917, 1918, 1919, 1920, 1921, 1922, 1923, 1924, 1925,
+			 1926, 1927, 1928, 1929, 1930, 1931, 1932, 1933, 1934, 1935, 1936, 1937, 1938, 1939, 1940, 1941, 1942, 1943,
+			  1944, 1945, 1946, 1947, 1948, 1949, 1950, 1951, 1952, 1953, 1954, 1955, 1956, 1957, 1958, 1959, 1960, 1961,
+			   1962, 1963, 1964, 1965, 1966, 1967, 1968, 1969, 1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979, 
+			   1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997,
+			    1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015,
+				 2016, 2017]
+			// Create a linear scale to transform the data
+			var x = d3.scaleLinear()
+				.domain(d3.extent(years))
+				.range([0, width]);
+
+			// Append an X-axis group to the SVG
+			var xAxis = svg.append("g")
+				.attr("transform", "translate(0," + height + ")")
+				.call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d"))); // Use d3.format to format the tick labels as integers
 
 
-			/* Scale */
-			var xScale = d3.scaleTime()
-			.domain(d3.extent(data[0].values, d => d.date))
-			.range([0, width-margin]);
 
-			var yScale = d3.scaleLinear()
-			.domain([0, d3.max(data[0].values, d => d.price)])
-			.range([height-margin, 0]);
+			// Add Y axis
+			var y = d3.scaleLinear()
+				.domain([0, d3.max(data, function(d) { return d.song_count_per_year; })])
+				.range([ height, 0 ]);
+			svg.append("g")
+				.call(d3.axisLeft(y));
 
+			// color palette
 			var color = d3.scaleOrdinal(d3.schemeCategory10);
 
-			/* Add SVG */
-			var svg = d3.select("#chart").append("svg")
-			.attr("width", (width+margin)+"px")
-			.attr("height", (height+margin)+"px")
-			.append('g')
-			.attr("transform", `translate(${margin}, ${margin})`);
+			/*
+			// Draw the line
+			svg.selectAll(".line")
+				.data(sumstat)
+				.enter()
+				.append("path")
+					.attr("fill", "none")
+					.attr("stroke", function(d){ return color(d.key) })
+					.attr("stroke-width", 1.5)
+					.attr("d", function(d){
+					return d3.line()
+						.x(function(d) { return x(d.year); })
+						.y(function(d) { return y(d.song_count_per_year); })
+						(d.values)
+					})
+
+					*/
 
 
-			/* Add line into SVG */
-			var line = d3.line()
-			.x(d => xScale(d.date))
-			.y(d => yScale(d.price));
-
-			let lines = svg.append('g')
-			.attr('class', 'lines');
-
-			lines.selectAll('.line-group')
-			.data(data).enter()
-			.append('g')
-			.attr('class', 'line-group')  
-			.on("mouseover", function(d, i) {
-				svg.append("text")
-					.attr("class", "title-text")
-					.style("fill", color(i))        
-					.text(d.name)
-					.attr("text-anchor", "middle")
-					.attr("x", (width-margin)/2)
-					.attr("y", 5);
-				})
-			.on("mouseout", function(d) {
-				svg.select(".title-text").remove();
-				})
-			.append('path')
-			.attr('class', 'line')  
-			.attr('d', d => line(d.values))
-			.style('stroke', (d, i) => color(i))
-			.style('opacity', lineOpacity)
-			.on("mouseover", function(d) {
-				d3.selectAll('.line')
-								.style('opacity', otherLinesOpacityHover);
-				d3.selectAll('.circle')
-								.style('opacity', circleOpacityOnLineHover);
-				d3.select(this)
-					.style('opacity', lineOpacityHover)
-					.style("stroke-width", lineStrokeHover)
-					.style("cursor", "pointer");
-				})
-			.on("mouseout", function(d) {
-				d3.selectAll(".line")
-								.style('opacity', lineOpacity);
-				d3.selectAll('.circle')
-								.style('opacity', circleOpacity);
-				d3.select(this)
-					.style("stroke-width", lineStroke)
-					.style("cursor", "none");
-				});
-
-
-			/* Add circles in the line */
-			lines.selectAll("circle-group")
-			.data(data).enter()
-			.append("g")
-			.style("fill", (d, i) => color(i))
-			.selectAll("circle")
-			.data(d => d.values).enter()
-			.append("g")
-			.attr("class", "circle")  
-			.on("mouseover", function(d) {
-				d3.select(this)     
-					.style("cursor", "pointer")
-					.append("text")
-					.attr("class", "text")
-					.text(`${d.price}`)
-					.attr("x", d => xScale(d.date) + 5)
-					.attr("y", d => yScale(d.price) - 10);
-				})
-			.on("mouseout", function(d) {
-				d3.select(this)
-					.style("cursor", "none")  
-					.transition()
-					.duration(duration)
-					.selectAll(".text").remove();
-				})
-			.append("circle")
-			.attr("cx", d => xScale(d.date))
-			.attr("cy", d => yScale(d.price))
-			.attr("r", circleRadius)
-			.style('opacity', circleOpacity)
-			.on("mouseover", function(d) {
-					d3.select(this)
-					.transition()
-					.duration(duration)
-					.attr("r", circleRadiusHover);
-				})
-				.on("mouseout", function(d) {
-					d3.select(this) 
-					.transition()
-					.duration(duration)
-					.attr("r", circleRadius);  
-				});
-
-
-			/* Add Axis into SVG */
-			var xAxis = d3.axisBottom(xScale).ticks(5);
-			var yAxis = d3.axisLeft(yScale).ticks(5);
-
-			svg.append("g")
-			.attr("class", "x axis")
-			.attr("transform", `translate(0, ${height-margin})`)
-			.call(xAxis);
-
-			svg.append("g")
-			.attr("class", "y axis")
-			.call(yAxis)
-			.append('text')
-			.attr("y", 15)
-			.attr("transform", "rotate(-90)")
-			.attr("fill", "#000")
-			.text("Total values");
 		}
 
 	</script>
