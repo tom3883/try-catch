@@ -200,36 +200,46 @@
 
 			selectedData.forEach(function(countryData) {
 				svg.selectAll(".line")
-					.data([countryData]) // Use an array with the data for the current country
+					.data([countryData])
 					.enter()
 					.append("path")
 					.attr("fill", "none")
-					.attr("stroke", function(d) { return color(d.key); })
+					.attr("stroke", function (d) { return color(d.key); })
 					.attr("stroke-width", 1.5)
-					.attr("d", function(d) {
+					.attr("d", function (d) {
 						return d3.line()
-							.x(function(d) { 
-								if(time == 'year') {
+							.x(function (d) {
+								if (time == 'year') {
 									return x(d.year);
+								} else {
+									return x(d.periods);
 								}
-								else
-									return x(d.periods); })
-							.y(function(d) { return y(d.song_count_per_year); })
+							})
+							.y(function (d) { return y(d.song_count_per_year); })
 							(d.values);
 					});
 
 
+				// Remove any existing points
+    			//svg.selectAll(".point").remove();
 
-				// Add points (circles) for each data point
-				svg.selectAll(".point")
-						.data(countryData.values)
-						.enter()
-						.append("circle")
-						.attr("class", "point")
-						.attr("cx", function(d) { return x(d.year); })
-						.attr("cy", function(d) { return y(d.song_count_per_year); })
-						.attr("r", 4) // Adjust the radius of the circles
-						.style("fill", function(d) { return color(countryData.key); });
+				// Create a unique class for points based on the country's key
+				var pointClass = "point-" + countryData.key;
+				
+				// Append points for the current country
+				svg.selectAll("." + pointClass) // Select by the unique class
+					.data(countryData.values)
+					.enter()
+					.append("circle")
+					.attr("class", pointClass) // Assign the unique class
+					.attr("cx", function (d) {
+						return x(d.year); // Use the correct property for the x-coordinate
+					})
+					.attr("cy", function (d) {
+						return y(d.song_count_per_year); // Use the correct property for the y-coordinate
+					})
+					.attr("r", 2)
+					.style("fill", function (d) { return color(countryData.key); });
 			});
 
 
