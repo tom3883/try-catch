@@ -37,6 +37,26 @@
 			width: 100%; /* Make the legend full width within its container */
 			height: 100%; /* Make the legend full height within its container */
 		}
+
+		/* Style for the tooltip */
+		#tooltip {
+			position: absolute;
+			text-align: center;
+			width: auto;
+			height: auto;
+			padding: 5px;
+			background: lightgray;
+			border: 1px solid #666;
+			border-radius: 5px;
+			pointer-events: none; /* Prevent the tooltip from blocking mouse interactions with points */
+			font-size: 12px;
+		}
+
+
+		#tooltip.hidden {
+			display: none;
+		}
+
 		
     </style>
 </head>
@@ -46,6 +66,11 @@
         <button id="byYear">By Year</button>
         <button id="byPeriod">By Period</button>
     </div>
+
+	<div id="tooltip" class="hidden">
+		<p id="country-name"></p>
+	  </div>
+	  
 
 	<div id="legend-container">
         <div id="legend">
@@ -271,8 +296,27 @@
 
 				// Create a unique class for points based on the country's key
 				var pointClass = "point-" + countryData.key;
-				
-				// Append points for the current country
+
+
+
+				// ...
+
+				// Create a tooltip element
+				var tooltip = d3.select("#chart-container")
+								.append("div")
+								.attr("id", "tooltip")
+								.style("opacity", 0);
+
+				// Function to get the top-3 songs for a specific country and year
+				function getTop3SongsForCountryAndYear(countryName, selectedYear) {
+					return originalData.filter(function(d) {
+						return d.year == selectedYear && d["location.country"] === countryName;
+					}).sort(function(a, b) {
+						return a.rank - b.rank;
+				}).slice(0, 3);
+				}
+
+				// Create points (circles) for the selected data
 				svg.selectAll("." + pointClass) // Select by the unique class
 					.data(countryData.values)
 					.enter()
@@ -284,9 +328,41 @@
 					.attr("cy", function (d) {
 						return y(d.song_count_per_year); // Use the correct property for the y-coordinate
 					})
-					.attr("r", 2)
-					.style("fill", function (d) { return color(countryData.key); });
+					.attr("r", 3)
+					.style("fill", function (d) { return color(countryData.key)})
+					.on("mouseover", function(d) {
+						console.log("cccc");
+						// Show the tooltip with country name, top-3 songs, and period
+						var countryName = countryData.key;
+						var selectedYear = d3.format(".0f")(d.year);
+						var selectedPeriod = d.period;
+						var top3Songs = getTop3SongsForCountryAndYear(countryName, selectedYear);
+
+						var tooltipContent = `${countryName}<br>Top-3 Songs (${selectedPeriod}):<br><ul>`;
+						top3Songs.forEach(song => {
+						tooltipContent += `<li>${song.title} - ${song.name}</li>`;
+						});
+						tooltip.html(tooltipContent)
+						.style("left", (d3.event.pageX + 10) + "px")
+						.style("top", (d3.event.pageY - 40) + "px")
+						.style("opacity", 0.9);
+					})
+					.on("mouseout", function(d) {
+						// Hide the tooltip on mouseout
+						tooltip.style("opacity", 0);
+					});
+
+
+				// ...
+
+
 			});
+
+
+
+
+
+
 
 			// Add the chart title
 			svg.append("text")
