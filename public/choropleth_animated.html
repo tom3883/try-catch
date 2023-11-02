@@ -4,11 +4,13 @@
     <meta charset="utf-8">
 
     <script src="https://d3js.org/d3.v6.js"></script>
-    <link rel="stylesheet" type="text/css" href="choropleth.css">
+    <link rel="stylesheet" type="text/css" href="choropleth_animated.css">
 </head>
 
 <body>
     <h1>Animated Choropleth Map</h1>
+
+    <p>Switch to the <a href="/choropleth.html">static choropleth map</a></p>
 
     <p>Press the play button to start the animation</p>
     <div>
@@ -17,7 +19,7 @@
         <button id="resetButton">Reset</button>
     </div>
 
-    <svg id="choropleth_interactive" width="1200" height="630"></svg>
+    <svg id="choropleth_animated" width="1200" height="630"></svg>
     <div class="tooltip"></div>
 
     <script>
