@@ -75,7 +75,7 @@
 		var song_count_per_period = new Set();
 		var song_count_per_year = new Set();
 
-		var margin = {top: 10, right: 30, bottom: 30, left: 60},
+		var margin = {top: 40, right: 30, bottom: 30, left: 60},
 				width = 1000 - margin.left - margin.right,
 				height = 600 - margin.top - margin.bottom;
 
@@ -287,6 +287,39 @@
 					.attr("r", 2)
 					.style("fill", function (d) { return color(countryData.key); });
 			});
+
+			// Add the chart title
+			svg.append("text")
+				.attr("class", "chart-title")
+				.attr("x", width / 2)
+				.attr("y", -5) // Adjust the position as needed
+				.style("text-anchor", "middle")
+				.style("font-family", "Arial, sans-serif") // Change the font-family
+				.style("font-size", "16px") // Change the font-size
+				.text("Number of songs written in english yearly by different countries"); // Replace "Your Chart Title" with your desired title
+
+
+			// Add the x-axis label
+			svg.append("text")
+				.attr("class", "x-label")
+				.attr("text-anchor", "middle")
+				.attr("x", width / 2)
+				.attr("y", height + 30) // Adjust the position as needed
+				.style("font-family", "Arial, sans-serif") // Change the font-family
+				.style("font-size", "12px") // Change the font-size
+				.text("Year"); // Replace with your desired label text
+
+			// Add the y-axis label
+			svg.append("text")
+				.attr("class", "y-label")
+				.attr("text-anchor", "middle")
+				.attr("transform", "rotate(-90)")
+				.attr("x", -height / 2) // Adjust the position as needed
+				.attr("y", -40) // Adjust the position as needed
+				.style("font-family", "Arial, sans-serif") // Change the font-family
+				.style("font-size", "12px") // Change the font-size
+				.text("Song Count"); // Replace with your desired label text
+
 
 
 			// Create a legend
