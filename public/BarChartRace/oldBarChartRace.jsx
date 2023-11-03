@@ -21,9 +21,9 @@ let svg = d3.select("#scene")
   .attr("height", height)
   .attr("style", "max-width: 100%; height: auto;");
 
-let data = Obs.
 
-d3.csv("category-brands.csv").then(function (data) {
+d3.csv("category-brands.csv").then(function () {
+  let data = Obs.FileAttachments("category-brands.csv").csv({ typed: true })
   const names = new Set(data.map(d => d.name));
   const datevalues = Array.from(d3.rollup(data, ([d]) => d.value, d => +d.date, d => d.name))
     .map(([date, data]) => [new Date(date), data])

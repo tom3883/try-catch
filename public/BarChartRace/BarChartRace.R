@@ -23,9 +23,11 @@ dataset$publicationDate <- paste(dataset$publicationDate, "-01-01", sep = "")
 dataset_rank <- dataset %>%
   group_by(country, publicationDate) %>%
   summarise(rank = sum(rank)) %>%
-  arrange(publicationDate)
+  arrange(publicationDate) %>%
+  rename(date = publicationDate, name = country, value = rank) %>%
+  select(date, name, value)
 
 # View(dataset_rank)
 
 # write the obtained result in a csv file
-write.csv(dataset_rank, "src/BarChartRace.csv", row.names = FALSE)
+write.csv(dataset_rank, "public/BarChartRace/BarChartRace.csv", row.names = FALSE, quote = FALSE)
