@@ -47,8 +47,6 @@
             .attr("font-size", "24px")
             .attr("fill", "#b8b8b8");
 
-        // Read the years
-        let data = new Map();
 
         let cumulativeSongCount = new Map();
 
@@ -69,7 +67,7 @@
                     filteredData.forEach(d => {
                         geoCountry = dataGeo.features.find(data => data.id == d.id);
 
-                        //if there is data for a country for a  year
+                        //if there is data for a country for a year
                         if (geoCountry) {
                             total_song_count_country = cumulativeSongCount.get(d.id) + +d.song_count;
                             cumulativeSongCount.set(d.id, total_song_count_country);
@@ -90,7 +88,7 @@
                     // Clear existing map
                     svg.selectAll("g").remove();
 
-                    const countryPaths = svg.append("g")
+                    let countryPaths = svg.append("g")
                         .selectAll("path")
                         .data(dataGeo.features)
                         .join("path")
@@ -119,7 +117,7 @@
                         });
 
                     countryPaths.transition()
-                        .duration(300) // Adjust the duration as needed
+                        .duration(300)
                         .attr("fill", function (d) {
                             const countryId = d.id;
                             return colorScale(cumulativeSongCount.get(countryId));
@@ -169,6 +167,11 @@
             isPlaying = false;
             index = 0;
             updateMap(years[0]);
+            d3.json("/src/world.geojson").then(function (dataGeo) {
+                dataGeo.features.forEach(function (country) {
+                    cumulativeSongCount.set(country.id, 0);
+                });
+            })
         });
 
         function playAnimation() {
