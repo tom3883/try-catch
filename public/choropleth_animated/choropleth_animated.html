@@ -117,7 +117,7 @@
                         });
 
                     countryPaths.transition()
-                        .duration(300)
+                        .duration(500)
                         .attr("fill", function (d) {
                             const countryId = d.id;
                             return colorScale(cumulativeSongCount.get(countryId));
@@ -134,6 +134,7 @@
 
         loadYears(function (years) {
             updateMap(years[0]);
+            index++;
             // Once years are loaded we can start playing the animation
             playAnimation();
         })
