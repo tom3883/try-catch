@@ -20,6 +20,7 @@ View(songs)
 # remove incoherent country values
 dataset <- read.csv("../src/dataset.csv")
 val <- "[Worldwide]"
+
 dataset <- dataset[dataset$'location.country' != val, ]
 
 dataset$'location.country'[dataset$'location.country'== "Costa Mesa" ] <- "United States"

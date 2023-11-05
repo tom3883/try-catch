@@ -1,0 +1,324 @@
+date,name,value
+1910-01-01,United States,12
+1951-01-01,United States,1
+1958-01-01,United States,1
+1960-01-01,United States,2
+1963-01-01,United States,1
+1970-01-01,United States,6
+1972-01-01,United States,12
+1976-01-01,United States,1
+1977-01-01,United States,1
+1980-01-01,United Kingdom,1
+1983-01-01,United States,6
+1984-01-01,United Kingdom,28
+1984-01-01,United States,5
+1985-01-01,Canada,20
+1985-01-01,United Kingdom,13
+1986-01-01,Germany,8
+1986-01-01,United Kingdom,7
+1986-01-01,United States,6
+1987-01-01,Canada,5
+1987-01-01,United Kingdom,7
+1987-01-01,United States,25
+1988-01-01,Belgium,6
+1988-01-01,Germany,16
+1988-01-01,Italy,2
+1988-01-01,United Kingdom,11
+1988-01-01,United States,27
+1989-01-01,Canada,10
+1989-01-01,Germany,14
+1989-01-01,United Kingdom,6
+1989-01-01,United States,44
+1990-01-01,Belgium,1
+1990-01-01,Canada,4
+1990-01-01,France,2
+1990-01-01,Germany,10
+1990-01-01,United Kingdom,21
+1990-01-01,United States,24
+1991-01-01,Belgium,17
+1991-01-01,Canada,10
+1991-01-01,United Kingdom,2
+1991-01-01,United States,90
+1992-01-01,Ireland,104
+1992-01-01,Italy,2
+1992-01-01,Jamaica,1
+1992-01-01,United Kingdom,31
+1992-01-01,United States,41
+1993-01-01,Belgium,3
+1993-01-01,Canada,1
+1993-01-01,United Kingdom,4
+1993-01-01,United States,140
+1994-01-01,Belgium,4
+1994-01-01,Germany,8
+1994-01-01,Ireland,1
+1994-01-01,United Kingdom,9
+1994-01-01,United States,38
+1995-01-01,Belgium,8
+1995-01-01,Denmark,3
+1995-01-01,Finland,5
+1995-01-01,France,7
+1995-01-01,United Kingdom,21
+1995-01-01,United States,123
+1996-01-01,Belgium,9
+1996-01-01,Denmark,4
+1996-01-01,Finland,15
+1996-01-01,Germany,13
+1996-01-01,Italy,2
+1996-01-01,Jamaica,9
+1996-01-01,United Kingdom,8
+1996-01-01,United States,68
+1997-01-01,Belgium,23
+1997-01-01,Canada,1
+1997-01-01,Denmark,1
+1997-01-01,Japan,2
+1997-01-01,Sweden,5
+1997-01-01,United Kingdom,71
+1997-01-01,United States,91
+1998-01-01,Denmark,1
+1998-01-01,Finland,9
+1998-01-01,France,4
+1998-01-01,Germany,27
+1998-01-01,Ireland,10
+1998-01-01,Jamaica,1
+1998-01-01,United Kingdom,187
+1998-01-01,United States,220
+1999-01-01,Austria,1
+1999-01-01,Brazil,5
+1999-01-01,France,1
+1999-01-01,Germany,2
+1999-01-01,Japan,1
+1999-01-01,New Zealand,2
+1999-01-01,United Kingdom,129
+1999-01-01,United States,171
+2000-01-01,Austria,9
+2000-01-01,Finland,9
+2000-01-01,Italy,6
+2000-01-01,Japan,1
+2000-01-01,United Kingdom,114
+2000-01-01,United States,270
+2001-01-01,Belgium,9
+2001-01-01,Finland,45
+2001-01-01,France,2
+2001-01-01,Germany,2
+2001-01-01,Ireland,13
+2001-01-01,Italy,2
+2001-01-01,Sweden,10
+2001-01-01,United Kingdom,92
+2001-01-01,United States,253
+2002-01-01,Australia,1
+2002-01-01,Canada,15
+2002-01-01,France,10
+2002-01-01,Germany,18
+2002-01-01,Japan,5
+2002-01-01,Russia,1
+2002-01-01,Sweden,10
+2002-01-01,Turkey,50
+2002-01-01,United Kingdom,267
+2002-01-01,United States,367
+2003-01-01,Finland,18
+2003-01-01,France,18
+2003-01-01,Germany,1
+2003-01-01,Jamaica,4
+2003-01-01,Japan,16
+2003-01-01,South Africa,1
+2003-01-01,Turkey,40
+2003-01-01,United Kingdom,96
+2003-01-01,United States,507
+2004-01-01,Brazil,1
+2004-01-01,Canada,16
+2004-01-01,France,2
+2004-01-01,Germany,15
+2004-01-01,Ireland,1
+2004-01-01,Jamaica,1
+2004-01-01,Japan,3
+2004-01-01,Netherlands,33
+2004-01-01,Norway,1
+2004-01-01,Saint Vincent and The Grenadines,13
+2004-01-01,Slovakia,1
+2004-01-01,Sweden,19
+2004-01-01,Turkey,40
+2004-01-01,United Kingdom,76
+2004-01-01,United States,599
+2005-01-01,Austria,2
+2005-01-01,Canada,16
+2005-01-01,Denmark,15
+2005-01-01,France,1
+2005-01-01,Germany,2
+2005-01-01,Ireland,3
+2005-01-01,Italy,3
+2005-01-01,Mexico,11
+2005-01-01,Sweden,16
+2005-01-01,United Kingdom,652
+2005-01-01,United States,1176
+2006-01-01,Australia,117
+2006-01-01,Austria,1
+2006-01-01,Belgium,96
+2006-01-01,Brazil,1
+2006-01-01,Canada,88
+2006-01-01,Denmark,6
+2006-01-01,Finland,45
+2006-01-01,France,4
+2006-01-01,Germany,3
+2006-01-01,Italy,2
+2006-01-01,Jamaica,1
+2006-01-01,Japan,7
+2006-01-01,Mexico,3
+2006-01-01,Netherlands,173
+2006-01-01,Philippines,2
+2006-01-01,Saint Vincent and The Grenadines,1
+2006-01-01,Slovakia,9
+2006-01-01,Sweden,46
+2006-01-01,Turkey,30
+2006-01-01,United Kingdom,279
+2006-01-01,United States,1091
+2007-01-01,Australia,9
+2007-01-01,Belgium,1
+2007-01-01,Bosnia and Herzegovina,26
+2007-01-01,Canada,3
+2007-01-01,Finland,130
+2007-01-01,France,5
+2007-01-01,Germany,20
+2007-01-01,Ireland,3
+2007-01-01,Italy,5
+2007-01-01,Jamaica,9
+2007-01-01,Japan,15
+2007-01-01,Netherlands,1
+2007-01-01,New Zealand,1
+2007-01-01,Puerto Rico,3
+2007-01-01,Sweden,10
+2007-01-01,United Kingdom,351
+2007-01-01,United States,1231
+2008-01-01,Australia,3
+2008-01-01,Canada,7
+2008-01-01,Denmark,12
+2008-01-01,Finland,120
+2008-01-01,France,2
+2008-01-01,Germany,25
+2008-01-01,Hungary,7
+2008-01-01,Ireland,2
+2008-01-01,Jamaica,14
+2008-01-01,Japan,1
+2008-01-01,Netherlands,144
+2008-01-01,Philippines,9
+2008-01-01,Poland,4
+2008-01-01,Spain,5
+2008-01-01,Sweden,332
+2008-01-01,United Kingdom,266
+2008-01-01,United States,1340
+2009-01-01,Argentina,1
+2009-01-01,Australia,1
+2009-01-01,Belgium,4
+2009-01-01,Canada,89
+2009-01-01,Finland,50
+2009-01-01,France,10
+2009-01-01,Germany,5
+2009-01-01,Italy,5
+2009-01-01,Jamaica,15
+2009-01-01,Japan,44
+2009-01-01,Moldova,1
+2009-01-01,Netherlands,28
+2009-01-01,Philippines,6
+2009-01-01,Saint Vincent and The Grenadines,1
+2009-01-01,South Africa,8
+2009-01-01,Sweden,2
+2009-01-01,United Kingdom,163
+2009-01-01,United States,1479
+2010-01-01,Australia,11
+2010-01-01,Belgium,4
+2010-01-01,Canada,65
+2010-01-01,Cuba,1
+2010-01-01,Germany,64
+2010-01-01,Ireland,18
+2010-01-01,Jamaica,5
+2010-01-01,Netherlands,45
+2010-01-01,Philippines,1
+2010-01-01,Poland,2
+2010-01-01,Spain,1
+2010-01-01,Sweden,11
+2010-01-01,United Kingdom,105
+2010-01-01,United States,855
+2011-01-01,Australia,5
+2011-01-01,Bosnia and Herzegovina,11
+2011-01-01,Brazil,1
+2011-01-01,Canada,17
+2011-01-01,Denmark,9
+2011-01-01,Finland,60
+2011-01-01,Germany,2
+2011-01-01,Greece,8
+2011-01-01,Italy,1
+2011-01-01,Japan,1
+2011-01-01,Netherlands,18
+2011-01-01,Poland,3
+2011-01-01,South Africa,80
+2011-01-01,Sweden,131
+2011-01-01,United Kingdom,176
+2011-01-01,United States,848
+2012-01-01,Australia,10
+2012-01-01,Belgium,1
+2012-01-01,Canada,17
+2012-01-01,Italy,19
+2012-01-01,Poland,6
+2012-01-01,South Africa,8
+2012-01-01,Sweden,2
+2012-01-01,United Kingdom,193
+2012-01-01,United States,167
+2013-01-01,Australia,20
+2013-01-01,Belgium,56
+2013-01-01,Brazil,5
+2013-01-01,Canada,8
+2013-01-01,Finland,40
+2013-01-01,Germany,73
+2013-01-01,Jamaica,2
+2013-01-01,Netherlands,33
+2013-01-01,Norway,3
+2013-01-01,Poland,1
+2013-01-01,South Africa,8
+2013-01-01,Sweden,55
+2013-01-01,United Kingdom,41
+2013-01-01,United States,401
+2014-01-01,Australia,1
+2014-01-01,Belgium,8
+2014-01-01,Brazil,40
+2014-01-01,Canada,10
+2014-01-01,Denmark,1
+2014-01-01,Finland,5
+2014-01-01,France,4
+2014-01-01,Germany,44
+2014-01-01,India,3
+2014-01-01,Italy,39
+2014-01-01,Moldova,5
+2014-01-01,Netherlands,6
+2014-01-01,Poland,2
+2014-01-01,Puerto Rico,2
+2014-01-01,Sweden,56
+2014-01-01,United Kingdom,105
+2014-01-01,United States,415
+2015-01-01,Australia,3
+2015-01-01,Belgium,583
+2015-01-01,Canada,29
+2015-01-01,Denmark,65
+2015-01-01,Finland,55
+2015-01-01,Germany,81
+2015-01-01,Ireland,42
+2015-01-01,Japan,9
+2015-01-01,Moldova,55
+2015-01-01,Netherlands,15
+2015-01-01,Poland,15
+2015-01-01,South Africa,16
+2015-01-01,South Korea,9
+2015-01-01,Sweden,11
+2015-01-01,United Kingdom,105
+2015-01-01,United States,974
+2016-01-01,Bosnia and Herzegovina,2
+2016-01-01,Germany,2
+2016-01-01,Italy,1
+2016-01-01,Jamaica,2
+2016-01-01,Netherlands,2
+2016-01-01,Saint Vincent and The Grenadines,1
+2016-01-01,United Kingdom,208
+2016-01-01,United States,83
+2017-01-01,Canada,39
+2017-01-01,Jamaica,1
+2017-01-01,Netherlands,1
+2017-01-01,United Kingdom,1
+2017-01-01,United States,8
