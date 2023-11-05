@@ -16,6 +16,7 @@
     <p>Author: Robin GEORGI</p>
 
     <h2 class="chart-title">Ranking countries by number of songs produced in English</h2>
+    <div id="observablehq-viewof-replay-6e70f668"></div>
     <div id="observablehq-chart-7102093a"></div>
     <p>Song production (nb of songs)</p>
 
@@ -24,6 +25,7 @@
         import { Runtime, Inspector } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
         import define from "./BarChartRace.js";
         new Runtime().module(define, name => {
+            if (name === "viewof replay") return new Inspector(document.querySelector("#observablehq-viewof-replay-6e70f668"));
             if (name === "chart") return new Inspector(document.querySelector("#observablehq-chart-7102093a"));
         });
     </script>
