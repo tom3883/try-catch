@@ -51,7 +51,7 @@ function _1(md){return(
   
   
   function _duration(){return(
-  250
+  400
   )}
   
   function _n(){return(

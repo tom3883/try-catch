@@ -17,17 +17,16 @@ dataset$publicationDate <- substr(dataset$publicationDate, 1, 4)
 # replace publicationDate with XXXX-01-01 with XXXX being the year
 dataset$publicationDate <- paste(dataset$publicationDate, "-01-01", sep = "")
 
-# View(dataset)
 
 # sum the rank grouped by country and year of publicationDate order by year
 dataset_rank <- dataset %>%
   group_by(country, publicationDate) %>%
-  summarise(rank = sum(rank)) %>%
+  summarise(num_songs = n()) %>%
   arrange(publicationDate) %>%
-  rename(date = publicationDate, name = country, value = rank) %>%
+  # mutate(num_songs_cumulative = cumsum(num_songs)) %>%
+  rename(date = publicationDate, name = country, value = num_songs) %>%
   select(date, name, value)
 
-# View(dataset_rank)
 
 # write the obtained result in a csv file
 write.csv(dataset_rank, "public/BarChartRace/BarChartRace.csv", row.names = FALSE, quote = FALSE)
